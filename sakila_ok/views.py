@@ -20,7 +20,7 @@ from django.shortcuts import render, redirect, render_to_response
 # from django.template import RequestContext
 
 # Models
-from sakila.models import *
+from sakila_ok.models import *
 from django.db.models import *
 
 # # Mailer
@@ -66,7 +66,7 @@ def home(request):
     #     customer = Customer.objects.all()[0]
     #     d['customer'] = customer
     #     d['cust_status'] = getStatus(customer.customer_id)
-    return render(request, 'sakila/index.html', d)
+    return render(request, 'sakila_ok/index.html', d)
 
 def category(request, cat_id=None):
     d = getVariables(request,dictionary={'page_name': "Category"})
@@ -76,7 +76,7 @@ def category(request, cat_id=None):
     #         d['x'] = x.name
     #     except Exception:
     #         d['x'] = "Not Found"
-    return render(request, 'sakila/index.html', d)
+    return render(request, 'sakila_ok/index.html', d)
 
 def customer(request, cus_id=None):
     d = getVariables(request,dictionary={'page_name': "Customer"})
@@ -90,7 +90,7 @@ def customer(request, cus_id=None):
     #     # d['status'] = getStatus(cus_id)
     #     d['cust_status'] = getStatus(cus_id)
     #     print d['cust_status']
-    return render(request, 'sakila/customer.html', d)
+    return render(request, 'sakila_ok/customer.html', d)
 
 # if Project.objects.all():
     #     d['featured_projects'] = Project.objects.filter(is_featured=True).order_by('?')[:6]
