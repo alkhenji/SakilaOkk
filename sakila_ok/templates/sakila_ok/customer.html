@@ -22,8 +22,8 @@
 
                   <td><a href="/customer/{{c.customer_id}}" class="btn btn-default btn-sm btn-block"> Customer {{c.customer_id}}</a></td>
                   <td>{{c.store_id}}</td>
-                  <td class="col-lg-4">{{c.first_name}} {{c.last_name}}</td>
-                  <td class="col-lg-4">{{c.email}}</td>
+                  <td class="col-lg-4">{{c.first_name|title}} {{c.last_name|title}}</td>
+                  <td class="col-lg-4">{{c.email|lower}}</td>
                 </tr>
           {% endfor %}
 
@@ -32,7 +32,7 @@
   {% else %}
   
     <div class="page-header">
-        <h1>[{{c.customer_id}}] {{c.first_name}} {{c.last_name}}</h1>
+        <h1>[{{c.customer_id}}] {{c.first_name|title}} {{c.last_name|title}}</h1>
     </div>
 
     <div class="well well-lg">

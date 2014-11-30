@@ -8,6 +8,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
+# CLEARDB_DATABASE_URL: mysql://b6a1524783e940:3e36b7b3@us-cdbr-iron-east-01.cleardb.net/heroku_31d3d4d44109464?reconnect=true
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -57,10 +60,28 @@ WSGI_APPLICATION = 'sakila.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME':'sakila_database',
+#         # 'NAME': os.path.join(BASE_DIR, 'db.sakila'),
+#     }
+# }
+
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql', 
+    #     'NAME': 'sakila_database',
+    #     'USER': 'root',
+    #     'PASSWORD': 'sakila_password',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'sakila',
+        'USER': 'kfares',
+        'PASSWORD': 'kfares',
+        'HOST':'mysql4.qatar.cmu.local',
+        'PORT':'3334',
     }
 }
 
@@ -81,24 +102,55 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-# STATIC_URL = '/static/'
-
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
-
-# Static asset configuration
-import os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, '../sakila_ok/static/'),
-)
+# Parse database configuration from $DATABASE_URL
+# # import dj_database_url
+# # DATABASES['default'] =  dj_database_url.config()
+
+# # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# # Allow all host headers
+# ALLOWED_HOSTS = ['*']
+
+# # Static asset configuration
+# import os
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# STATIC_ROOT = 'staticfiles'
+# STATIC_URL = '/static/'
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, '../sakila_ok/static/'),
+# )
+
+# import sys
+# import urlparse
+# urlparse.uses_netloc.append('mysql')
+
+# try:
+#     # Check to make sure DATABASES is set in settings.py file.
+#     # If not default to {}
+#     if 'DATABASES' not in locals():
+#         DATABASES = {}
+
+#     if 'DATABASE_URL' in os.environ:
+#         url = urlparse.urlparse(os.environ['DATABASE_URL'])
+
+#         # Ensure default database exists.
+#         DATABASES['default'] = DATABASES.get('default', {})
+
+#         # Update with environment configuration.
+#         DATABASES['default'].update({
+#             'NAME': url.path[1:],
+#             'USER': url.username,
+#             'PASSWORD': url.password,
+#             'HOST': url.hostname,
+#             'PORT': url.port,
+#         })
+
+
+#         if url.scheme == 'mysql':
+#             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+# except Exception:
+#     print 'Unexpected error:', sys.exc_info()

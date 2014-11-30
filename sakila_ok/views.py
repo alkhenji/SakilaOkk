@@ -58,40 +58,51 @@ def getStatus(customer_id):
 
 def home(request):
     d = getVariables(request,dictionary={'page_name': "Home"})
-    # if Staff.objects.all():
-    #     d['first_staff'] = Staff.objects.all()[0] # < SQL QUERY HERE IN PYTHON!!
-    # if Category.objects.all():
-    #     d['all_categories'] = Category.objects.all()
-    # if Customer.objects.all():
-    #     customer = Customer.objects.all()[0]
-    #     d['customer'] = customer
-    #     d['cust_status'] = getStatus(customer.customer_id)
+    if Staff.objects.all():
+        d['first_staff'] = Staff.objects.all()[0] # < SQL QUERY HERE IN PYTHON!!
+    if Category.objects.all():
+        d['all_categories'] = Category.objects.all()
+    if Customer.objects.all():
+        customer = Customer.objects.all()[0]
+        d['customer'] = customer
+        d['cust_status'] = getStatus(customer.customer_id)
     return render(request, 'sakila_ok/index.html', d)
 
 def category(request, cat_id=None):
     d = getVariables(request,dictionary={'page_name': "Category"})
-    # if Category.objects.all():
-    #     try:
-    #         x = Category.objects.get(category_id=cat_id)
-    #         d['x'] = x.name
-    #     except Exception:
-    #         d['x'] = "Not Found"
+    if Category.objects.all():
+        try:
+            x = Category.objects.get(category_id=cat_id)
+            d['x'] = x.name
+        except Exception:
+            d['x'] = "Not Found"
     return render(request, 'sakila_ok/index.html', d)
 
 def customer(request, cus_id=None):
     d = getVariables(request,dictionary={'page_name': "Customer"})
-    # if not cus_id:
-    #     d['c_all'] = Customer.objects.all()
-    # else:
-    #     # individual customer page 
-    #     d['c_all'] = None
-    #     d['c'] = Customer.objects.get(customer_id=cus_id)
-    #     # revenue = Payment.objects.filter(customer_id=cus_id).aggregate(Sum('amount'))
-    #     # d['status'] = getStatus(cus_id)
-    #     d['cust_status'] = getStatus(cus_id)
-    #     print d['cust_status']
+    if not cus_id:
+        d['c_all'] = Customer.objects.all()
+    else:
+        # individual customer page 
+        d['c_all'] = None
+        d['c'] = Customer.objects.get(customer_id=cus_id)
+        # revenue = Payment.objects.filter(customer_id=cus_id).aggregate(Sum('amount'))
+        # d['status'] = getStatus(cus_id)
+        d['cust_status'] = getStatus(cus_id)
+        print d['cust_status']
     return render(request, 'sakila_ok/customer.html', d)
 
+def movie(request, film_id=None):
+    d = getVariables(request,dictionary={'page_name': "Movies"})
+    if not film_id:
+        d['f_all'] = Film.objects.all()
+    else:
+        f = Film.objects.get(film_id=film_id)
+        print f.language.name
+        d['f_language'] = f.language.name
+        d['f'] = f
+
+    return render(request, 'sakila_ok/movie.html', d)
 # if Project.objects.all():
     #     d['featured_projects'] = Project.objects.filter(is_featured=True).order_by('?')[:6]
     #     d['hot_projects'] = Project.objects.all().order_by('-likes')[:3] # how many projects

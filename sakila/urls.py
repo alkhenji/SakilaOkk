@@ -12,4 +12,7 @@ urlpatterns = patterns('',
     url(r'^category/(?P<cat_id>\d+)$', 'sakila_ok.views.category', name='category'),
     url(r'^customer/$', 'sakila_ok.views.customer', name='customer'),
     url(r'^customer/(?P<cus_id>\d+)$', 'sakila_ok.views.customer', name='customer'),
+
+    url(r'^movie/$', 'sakila_ok.views.movie', name='customer'),
+    url(r'^movie/(?P<film_id>\d+)$', 'sakila_ok.views.movie', name='movie'),
 )
