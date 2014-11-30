@@ -70,7 +70,7 @@
         
         <div class="panel panel-warning">
           <div class="panel-heading">
-            <h3 class="panel-title">Recent Rentals</h3>
+            <h3 class="panel-title"><i class="fa fa-film"></i> Recent Rentals</h3>
           </div>
           <div class="panel-body">
 
@@ -78,7 +78,7 @@
             {% for id,film in last5 %}
               <a href="/movie/{{id}}">
                 <i class="fa fa-angle-double-right"></i> 
-                {{ film }}<br/>
+                {{ film|title }}<br/>
               </a>
             {% endfor %}
 
@@ -90,7 +90,7 @@
 
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Customer Information</h3>
+            <h3 class="panel-title"><i class="fa fa-user"></i> Customer Information</h3>
           </div>
           <div class="panel-body">
             Panel content
@@ -102,7 +102,7 @@
       <div class="col-md-6">  
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Customer Information</h3>
+            <h3 class="panel-title"><i class="fa fa-user"></i> Customer Information</h3>
           </div>
           <div class="panel-body">
             <div class="row">
