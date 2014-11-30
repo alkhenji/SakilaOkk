@@ -54,19 +54,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'sakila.urls'
 
-WSGI_APPLICATION = 'sakila.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME':'sakila_database',
-#         # 'NAME': os.path.join(BASE_DIR, 'db.sakila'),
-#     }
-# }
+# WSGI_APPLICATION = 'sakila.wsgi.application'
 
 DATABASES = {
     # 'default': {

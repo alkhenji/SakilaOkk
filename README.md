@@ -17,6 +17,14 @@ This application requires Django 1.6.5, if you don't have it you can get it by:
     $ sudo pip install MySQL-python
 ```
 
+**NOTE: If you get an error "No Module Name Called MySQLdb" do the following:**
+
+```
+    $ brew install mysql
+    $ sudo pip install MySQL-python
+
+```
+
 ## Installation & Running the Application
 
 ```
