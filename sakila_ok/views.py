@@ -111,15 +111,8 @@ def customer(request, cus_id=None):
         d['c_all'] = None
         d['c'] = Customer.objects.get(customer_id=cus_id)
         d['cust_status'] = getStatus(cus_id)
-        last5 = get_last_5(cus_id)
-        # if last5:
-        #     last_5_result = []
-        #     for e in last5:
-        #         last_5_result.append(e[0])
-        #     last5 = last_5_result
-        d['last5'] = last5
-
-        print d['cust_status']
+        d['last5'] = get_last_5(cus_id)
+        
     return render(request, 'sakila_ok/customer.html', d)
 
 def movie(request, film_id=None):
