@@ -56,6 +56,30 @@ def getStatus(customer_id):
     cursor.close() # closing the cursor connection
     return tmp[0][0] # parsing the results & returning it
 
+# def call_proc(proc_name, customer_id):
+#     cursor = connection.cursor() # opening a cursor to execute MySQL commands
+#     cursor.callproc(proc_name, customer_id) # calling the procedure
+#     tmp = cursor.fetchall() # fetching results
+#     cursor.close() # closing the cursor connection
+#     try:
+#         return tmp[0][0]
+#     except Exception:
+#         return "Error getting data."
+
+def get_last_5(customer_id):
+    cursor = connection.cursor() # opening a cursor to execute MySQL commands
+    cursor.callproc('sakila.last5', [customer_id]) # calling the procedure
+    tmp = cursor.fetchall() # fetching results
+    cursor.close() # closing the cursor connection
+    print tmp
+    if len(tmp) > 1:
+        return tmp
+    else:
+        return None
+
+get_last_5(1)
+
+
 def home(request):
     d = getVariables(request,dictionary={'page_name': "Home"})
     if Staff.objects.all():
@@ -86,9 +110,15 @@ def customer(request, cus_id=None):
         # individual customer page 
         d['c_all'] = None
         d['c'] = Customer.objects.get(customer_id=cus_id)
-        # revenue = Payment.objects.filter(customer_id=cus_id).aggregate(Sum('amount'))
-        # d['status'] = getStatus(cus_id)
         d['cust_status'] = getStatus(cus_id)
+        last5 = get_last_5(cus_id)
+        # if last5:
+        #     last_5_result = []
+        #     for e in last5:
+        #         last_5_result.append(e[0])
+        #     last5 = last_5_result
+        d['last5'] = last5
+
         print d['cust_status']
     return render(request, 'sakila_ok/customer.html', d)
 
