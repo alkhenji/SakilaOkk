@@ -7,8 +7,14 @@ This repository contains a Django project to render the MySQL Database Sakila in
 This application requires Django 1.6.5, if you don't have it you can get it by:
 
 ```
+    # Installing pip (Python Package Index)
     $ sudo easy_install pip
-    $ pip install django==1.6.5
+
+    # Installing Django 1.6.5
+    $ sudo pip install django==1.6.5
+
+    # Installing MySQL for Python
+    $ sudo pip install MySQL-python
 ```
 
 ## Installation & Running the Application
