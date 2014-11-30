@@ -56,6 +56,16 @@ def getStatus(customer_id):
     cursor.close() # closing the cursor connection
     return tmp[0][0] # parsing the results & returning it
 
+def getCustomerBalance(cus_id):
+    if type(cus_id) != str:
+        cus_id = str(cus_id)
+    cursor = connection.cursor()
+    query = "SELECT totalBalanceDue(%i);" % int(cus_id)
+    result = cursor.execute(query)
+    result2 = cursor.fetchone()[0]
+    cursor.close()
+    return result2
+
 # def call_proc(proc_name, customer_id):
 #     cursor = connection.cursor() # opening a cursor to execute MySQL commands
 #     cursor.callproc(proc_name, customer_id) # calling the procedure
@@ -71,13 +81,10 @@ def get_last_5(customer_id):
     cursor.callproc('sakila.last5', [customer_id]) # calling the procedure
     tmp = cursor.fetchall() # fetching results
     cursor.close() # closing the cursor connection
-    print tmp
     if len(tmp) > 1:
         return tmp
     else:
         return None
-
-get_last_5(1)
 
 
 def home(request):
@@ -112,6 +119,7 @@ def customer(request, cus_id=None):
         d['c'] = Customer.objects.get(customer_id=cus_id)
         d['cust_status'] = getStatus(cus_id)
         d['last5'] = get_last_5(cus_id)
+        d['balance_due'] = getCustomerBalance(cus_id)
         
     return render(request, 'sakila_ok/customer.html', d)
 

@@ -7,10 +7,10 @@
         <script src="{% static 'sakila_ok/js/jquery.min.js' %}"></script>
         <link href="{% static 'sakila_ok/yeti/bootstrap.css' %}" rel="stylesheet">
         <link href="{% static 'sakila_ok/yeti/bootstrap.min.css' %}" rel="stylesheet">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
     </head>
     <body>
-        <div class="navbar navbar-default">
+        <div class="navbar navbar-inverse">
           <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -18,7 +18,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">OKK's Sakila</a>
+                <a class="navbar-brand" href="/"><i class="fa fa-cube"></i> OKK's Sakila</a>
               </div>
               <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav">
@@ -38,20 +38,9 @@
                   </li> -->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left">
-                      <input type="text" class="form-control col-lg-8" placeholder="Search">
-                    </form>
-                  <!-- <li><a href="#">Search</a></li> -->
-                  <!-- <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Action</a></li>
-                      <li><a href="#">Another action</a></li>
-                      <li><a href="#">Something else here</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#">Separated link</a></li>
-                    </ul>
-                  </li> -->
+                  <form class="navbar-form navbar-left">
+                    <input type="text" class="form-control col-lg-8" placeholder="Search">
+                  </form>
                 </ul>
               </div>
               </div>
@@ -59,6 +48,20 @@
 
         <div class="container">
         {% block content %}{% endblock %}
-      </div>
+        </div>
     </body>
+
+    <div class="container">
+      <footer style="right:0;left:0;bottom:0; position:fixed; margin-bottom:-20px;">
+        <div class="navbar navbar-default">
+          <div class="container">
+            <div style="color:white; text-align:center;">
+              <br/>
+              All Rights Reserved <i class="fa fa-copyright"></i> 2014 Abdulla AlKhenji, Khaled Fares, Omar Ragheeb. <a class="btn btn-info  btn-sm" href="http://www.github.com/alkhenji/sakilaokk"><i class="fa fa-github"></i> Git it now!</a>
+              <br/><br/>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
 </html>
