@@ -20,24 +20,23 @@ This application requires Django 1.6.5, if you don't have it you can get it by:
 ## Installation & Running the Application
 
 ```
+    # Navigate to a directory to save the app
     $ cd /path/to/save/app
+
+    # Download the app
     $ git clone https://github.com/alkhenji/SakilaOkk.git
+
+    # Switch to that directory
     $ cd SakilaOkk
+
+    # Run the application (localhost:8000)
     $ python manage.py runserver
 ```
 
-## How to run:
-The application requires Django 1.6.5. If you have PIP, you can install it by running:
-$ sudo pip install django==1.6.5
+To run the application on a different port: `$ python manage.py runserver 8008` where 8008 is the port number that you want.
 
-## Running the application locally:
+## Connecting the Database:
 You will need to be connected to the CMUQ-SECURE network to be able to access the database. If you are using it from outside CMUQ, you will need to use a VPN to gain access to the database.
-
-To run the application, open terminal and go to the application file:
-```
-    $ cd ~/path/to/sakilaokk
-    $ python manage.py runserver
-```
 
 ... and that's it :)!
 
