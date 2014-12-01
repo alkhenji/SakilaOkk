@@ -66,16 +66,6 @@ def getCustomerBalance(cus_id):
     cursor.close()
     return result2
 
-# def call_proc(proc_name, customer_id):
-#     cursor = connection.cursor() # opening a cursor to execute MySQL commands
-#     cursor.callproc(proc_name, customer_id) # calling the procedure
-#     tmp = cursor.fetchall() # fetching results
-#     cursor.close() # closing the cursor connection
-#     try:
-#         return tmp[0][0]
-#     except Exception:
-#         return "Error getting data."
-
 def get_last_5(customer_id):
     cursor = connection.cursor() # opening a cursor to execute MySQL commands
     cursor.callproc('sakila.last5', [customer_id]) # calling the procedure
@@ -88,15 +78,15 @@ def get_last_5(customer_id):
 
 
 def home(request):
-    d = getVariables(request,dictionary={'page_name': "Home"})
-    if Staff.objects.all():
-        d['first_staff'] = Staff.objects.all()[0] # < SQL QUERY HERE IN PYTHON!!
-    if Category.objects.all():
-        d['all_categories'] = Category.objects.all()
-    if Customer.objects.all():
-        customer = Customer.objects.all()[0]
-        d['customer'] = customer
-        d['cust_status'] = getStatus(customer.customer_id)
+    d = getVariables(request, dictionary={'page_name': "Home"})
+    # if Staff.objects.all():
+    #     d['first_staff'] = Staff.objects.all()[0] # < SQL QUERY HERE IN PYTHON!!
+    # if Category.objects.all():
+    #     d['all_categories'] = Category.objects.all()
+    # if Customer.objects.all():
+    #     customer = Customer.objects.all()[0]
+    #     d['customer'] = customer
+    #     d['cust_status'] = getStatus(customer.customer_id)
     return render(request, 'sakila_ok/index.html', d)
 
 def category(request, cat_id=None):
@@ -129,17 +119,37 @@ def movie(request, film_id=None):
         d['f_all'] = Film.objects.all()
     else:
         f = Film.objects.get(film_id=film_id)
-        print f.language.name
         d['f_language'] = f.language.name
         d['f'] = f
 
     return render(request, 'sakila_ok/movie.html', d)
-# if Project.objects.all():
-    #     d['featured_projects'] = Project.objects.filter(is_featured=True).order_by('?')[:6]
-    #     d['hot_projects'] = Project.objects.all().order_by('-likes')[:3] # how many projects
-    #     d['projects'] = Project.objects.filter(is_featured=True).order_by('?')[:5]
-    # if UserProfile.objects.filter(is_company=False):
-    #     d['random_member'] = UserProfile.objects.filter(is_company=False).order_by('?')[:1][0]
+
+def movie_search(request):
+    d = getVariables(request, dictionary={'page_name': "Search"})
+    if request.method == 'GET':
+        try:
+            film_id = request.GET['id']
+            d['req'] = film_id
+        except Exception:
+            d['error'] = True
+            return render(request, 'sakila_ok/movie_search.html', d)
+        
+        try:
+            film_id = request.GET['id']
+            the_film_id = int(film_id)
+        except Exception:
+            the_film_id = None
+            film_id = film_id.upper()
+
+        if type(the_film_id) == int:
+            d['film_ids'] = Film.objects.get(film_id=the_film_id)
+        else:
+            d['film_ids'] = None
+        d['films'] = Film.objects.filter(title__contains=film_id)
+
+    else:
+        d['error'] = True
+    return render(request, 'sakila_ok/movie_search.html', d)
 
 
 # # -------------------- Parameters Function -------------------------
@@ -756,4 +766,4 @@ def movie(request, film_id=None):
 #     return HttpResponse(p.image.read(), mimetype=p.mimetype)
 
 # def user_upload(request):
-#     pass
+    # pass

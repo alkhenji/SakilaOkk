@@ -1,0 +1,65 @@
+{% extends "sakila_ok/base.html" %}
+{% block content %}
+
+    {% if error %}
+        
+        <div class="page-header">
+            <h1>Umm.. Something went wrong...</h1>
+        </div>
+
+        <div class="well well-lg">
+            <div class="container">
+                <h2>It is possible that:</h2><br/>
+                <h4>- You didn't specify a value for the search query</h4>
+                <h4>- The query you entered does not exist</h4>
+                <h4>- The connection to the internet have been disconnected</h4>
+                <h4>- Khaled Fares changed his database password :)</h4>
+            </div>
+        </div>
+
+    {% else %}
+        
+        <div class="page-header">
+            <h1>Searching for "{{req}}"</h1>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Films Title Containing "{{req}}"</div>
+                    <div class="panel-body">
+                        {% if films %}
+                            <ul>
+                            {% for f in films %}
+                                <li>{{f.film_id}} - {{ f.title|title }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <h4>I can't find anything that matches your search..</h4>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if film_ids %}
+
+                <div class="col-md-4">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">Hey, looking for Film ID {{req}}?</div>
+                        <div class="panel-body">
+                            <a href="/movie/{{film_ids.film_id}}">
+                                {{film_ids.film_id}} - {{ film_ids.title|title }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+    <!-- <h1>Customer Status ({{customer.customer_id}}): {{cust_status}}</h1> -->
+
+{% endblock %}

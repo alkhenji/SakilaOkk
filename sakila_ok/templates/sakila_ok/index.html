@@ -1,12 +1,12 @@
 {% extends "sakila_ok/base.html" %}
 {% block content %}
 
-  <h1>Welcome to OKK!</h1>
-    <div class="alert alert-info">
-        <h4>What is OKK?</h4>
+  <div class="page-header"><h1>Welcome to OKK!</h1></div>
+    <div class="jumbotron">
+        <h1>What is OKK?</h1>
         <p>OKK (Standing for Omar-Khaled-Khenji) is a web interface to interact with the Saklia database provided by MySQL.</p>
     </div>
 
-    <h1>Customer Status ({{customer.customer_id}}): {{cust_status}}</h1>
+    <!-- <h1>Customer Status ({{customer.customer_id}}): {{cust_status}}</h1> -->
 
 {% endblock %}

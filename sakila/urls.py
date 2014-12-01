@@ -15,4 +15,5 @@ urlpatterns = patterns('',
 
     url(r'^movie/$', 'sakila_ok.views.movie', name='customer'),
     url(r'^movie/(?P<film_id>\d+)$', 'sakila_ok.views.movie', name='movie'),
+    url(r'^movie/search/$', 'sakila_ok.views.movie_search', name='movie_search'),
 )
