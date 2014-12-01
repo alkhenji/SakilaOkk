@@ -142,7 +142,9 @@ def movie_search(request):
             film_id = film_id.upper()
 
         if type(the_film_id) == int:
-            d['film_ids'] = Film.objects.get(film_id=the_film_id)
+            film_ids = Film.objects.filter(film_id=the_film_id)
+            if film_ids:
+                d['film_ids'] = film_ids[0]
         else:
             d['film_ids'] = None
         d['films'] = Film.objects.filter(title__contains=film_id)
