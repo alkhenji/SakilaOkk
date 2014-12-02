@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^customer/$', 'sakila_ok.views.customer', name='customer'),
     url(r'^customer/(?P<cus_id>\d+)$', 'sakila_ok.views.customer', name='customer'),
 
-    url(r'^movie/$', 'sakila_ok.views.movie', name='customer'),
-    url(r'^movie/(?P<film_id>\d+)$', 'sakila_ok.views.movie', name='movie'),
-    url(r'^movie/search/$', 'sakila_ok.views.movie_search', name='movie_search'),
+    url(r'^film/$', 'sakila_ok.views.film', name='customer'),
+    url(r'^film/(?P<film_id>\d+)$', 'sakila_ok.views.film', name='movie'),
+    url(r'^film/search/$', 'sakila_ok.views.film_search', name='movie_search'),
 )

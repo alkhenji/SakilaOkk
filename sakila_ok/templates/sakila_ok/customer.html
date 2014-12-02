@@ -2,7 +2,9 @@
 {% block content %}
 
   {% if c_all %}
-    <h1>All Customers</h1>
+    <div class="page-header">
+      <h1><i class="fa fa-group"></i> All Customers</h1>
+    </div>
       <table class="table table-striped table-hover ">
         <thead>
           <tr>
@@ -15,14 +17,14 @@
         <tbody>
           {% for c in c_all %}
                 {% if c.active %}
-                  <tr class="success">
+                  <tr>
                 {% else %}
                   <tr class="danger">
                 {% endif %}
 
-                  <td><a href="/customer/{{c.customer_id}}" class="btn btn-default btn-sm btn-block"> Customer {{c.customer_id}}</a></td>
+                  <td><a href="/customer/{{c.customer_id}}" class="btn btn-default btn-xs btn-block"> Customer {{c.customer_id}}</a></td>
                   <td>{{c.store_id}}</td>
-                  <td class="col-lg-4">{{c.first_name|title}} {{c.last_name|title}}</td>
+                  <td class="col-lg-8">{{c.first_name|title}} {{c.last_name|title}}</td>
                   <td class="col-lg-4">{{c.email|lower}}</td>
                 </tr>
           {% endfor %}
@@ -76,14 +78,14 @@
 
           {% if last5 %}
             {% for id,film in last5 %}
-              <a href="/movie/{{id}}">
+              <a href="/film/{{id}}">
                 <i class="fa fa-angle-double-right"></i> 
                 {{ film|title }}<br/>
               </a>
             {% endfor %}
 
           {% else %}
-            No Recent Movies
+            No Recent Films
           {% endif %}
           </div>
         </div>

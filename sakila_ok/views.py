@@ -76,6 +76,56 @@ def get_last_5(customer_id):
     else:
         return None
 
+def get_inventory(film_id):
+    cursor = connection.cursor() # opening a cursor to execute MySQL commands
+    cursor.callproc('sakila.Instore', [film_id]) # calling the procedure
+    tmp = cursor.fetchall() # fetching results
+    cursor.close() # closing the cursor connection
+    if len(tmp) > 1:
+        return tmp
+    else:
+        return None
+
+def get_rentedout(film_id):
+    cursor = connection.cursor() # opening a cursor to execute MySQL commands
+    cursor.callproc('sakila.Rentedout', [film_id]) # calling the procedure
+    tmp = cursor.fetchall() # fetching results
+    cursor.close() # closing the cursor connection
+    if len(tmp) > 1:
+        return tmp
+    else:
+        return None
+
+def get_actors(film_id):
+    cursor = connection.cursor() # opening a cursor to execute MySQL commands
+    cursor.callproc('sakila.Movieinfo', [film_id]) # calling the procedure
+    tmp = cursor.fetchall() # fetching results
+    cursor.close() # closing the cursor connection
+    if len(tmp) > 1:
+        return tmp
+    else:
+        return None
+
+def get_movie_status(film_id):
+    cursor = connection.cursor() # opening a cursor to execute MySQL commands
+    cursor.callproc('sakila.Movieinfo', [film_id]) # calling the procedure
+    tmp = cursor.fetchall() # fetching results
+    cursor.close() # closing the cursor connection
+    if len(tmp) > 1:
+        return tmp
+    else:
+        return None
+
+def get_last_5_rentals(film_id):
+    cursor = connection.cursor() # opening a cursor to execute MySQL commands
+    cursor.callproc('sakila.last5rentals', [film_id]) # calling the procedure
+    tmp = cursor.fetchall() # fetching results
+    cursor.close() # closing the cursor connection
+    if len(tmp) > 1:
+        return tmp
+    else:
+        return None
+
 
 def home(request):
     d = getVariables(request, dictionary={'page_name': "Home"})
@@ -113,18 +163,23 @@ def customer(request, cus_id=None):
         
     return render(request, 'sakila_ok/customer.html', d)
 
-def movie(request, film_id=None):
-    d = getVariables(request,dictionary={'page_name': "Movies"})
+def film(request, film_id=None):
+    d = getVariables(request,dictionary={'page_name': "Films"})
     if not film_id:
         d['f_all'] = Film.objects.all()
     else:
         f = Film.objects.get(film_id=film_id)
         d['f_language'] = f.language.name
         d['f'] = f
+        d['inventory'] = get_inventory(film_id)
+        d['rented_out'] = get_rentedout(film_id)
+        d['actors'] = get_actors(film_id)
+        d['recent_rentals'] = get_last_5_rentals(film_id)
+        print d['recent_rentals']
 
-    return render(request, 'sakila_ok/movie.html', d)
+    return render(request, 'sakila_ok/film.html', d)
 
-def movie_search(request):
+def film_search(request):
     d = getVariables(request, dictionary={'page_name': "Search"})
     if request.method == 'GET':
         try:
@@ -132,7 +187,7 @@ def movie_search(request):
             d['req'] = film_id
         except Exception:
             d['error'] = True
-            return render(request, 'sakila_ok/movie_search.html', d)
+            return render(request, 'sakila_ok/film_search.html', d)
         
         try:
             film_id = request.GET['id']
@@ -151,7 +206,7 @@ def movie_search(request):
 
     else:
         d['error'] = True
-    return render(request, 'sakila_ok/movie_search.html', d)
+    return render(request, 'sakila_ok/film_search.html', d)
 
 
 # # -------------------- Parameters Function -------------------------
