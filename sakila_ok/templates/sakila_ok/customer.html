@@ -78,30 +78,24 @@
         {{ each.amount }}
       {% endfor %}
 
-        <!-- <div class="col-md-12"> -->
-          <!-- <a href="/customer/{{c.customer_id}}/cap/" class="btn btn-lg btn-info btn-block"><i class="fa fa-shopping-cart"></i> With payment</a> -->
+        <form class="well well-lg" style="height:90px;">
+          <div class="form-group col-md-3">
+            <input class="form-control" type="text" name="film_id" placeholder="Scan Film ID to Checkout"/>
+          </div>
 
-          <form class="well well-lg" style="height:90px;">
-            <div class="form-group col-md-3">
-              <input class="form-control" type="text" name="film_id" placeholder="Scan Film ID to Checkout"/>
-            </div>
+          <div class="form-group has-success col-md-3">
+            <input type="text" class="form-control" id="inputSuccess" placeholder="Enter SalespersonID"/>
+          </div>
 
-            <div class="form-group has-success col-md-3">
-              <input type="text" class="form-control" id="inputSuccess" placeholder="Enter SalespersonID"/>
-            </div>
+          <div class="col-md-4">
+            <a class="btn btn-md btn-success"><i class="fa fa-shopping-cart"></i> With Payment</a>   
+            <a class="btn btn-md btn-warning"><i class="fa fa-shopping-cart"></i> Without Payment</a>   
+          </div>
 
-            <div class="col-md-4">
-              <a class="btn btn-md btn-success"><i class="fa fa-shopping-cart"></i> With Payment</a>   
-              <a class="btn btn-md btn-warning"><i class="fa fa-shopping-cart"></i> Without Payment</a>   
-            </div>
-
-            <div class="col-md-2">
-              <a href="/customer/{{c.customer_id}}/pay" class="btn btn-md btn-info"><i class="fa fa-dollar"></i> Pay Balance Due</a>   
-            </div>
-          </form>
-
-        <!-- <br/><br/><br/><br/> -->
-
+          <div class="col-md-2">
+            <a href="/customer/{{c.customer_id}}/pay" class="btn btn-md btn-info"><i class="fa fa-dollar"></i> Pay Balance Due</a>   
+          </div>
+        </form>
       </div>
     </div>
 

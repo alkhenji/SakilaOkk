@@ -48,5 +48,7 @@ You will need to be connected to the CMUQ-SECURE network to be able to access th
 
 ... and that's it :)!
 
+**Note: To populate the database with the scripts, use the mssql.sql file. The commented out procedures are done with Django**
+
 ## Developers:
 Omar Ragheeb (O), Abdulla AlKhenji (K), Khaled Fares (K)
