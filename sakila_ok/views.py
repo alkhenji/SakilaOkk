@@ -100,6 +100,7 @@ def get_movie_status3(film_id):
 
     for i in top10:
         top10_l.append(i[0])
+        print i
     for i in hot:
         hot_l.append(i[0])
     for i in dud:
@@ -114,6 +115,31 @@ def get_movie_status3(film_id):
     else:
         return "Regular"
 
+def get_customer_status(cus_id):
+    count = Customer.objects.count()
+    limit = int(count * .2)
+
+    cursor = connection.cursor()
+    cursor.execute("SELECT customer_id FROM sakila.allCustomers;")
+    total_rows = cursor.fetchall()
+
+    preferred = total_rows[:limit]
+    casual = total_rows[count - limit:]
+
+    p = []
+    c = []
+
+    for i in preferred:
+        p.append(i[0])
+    for i in casual:
+        c.append(i[0])
+
+    if cus_id in p:
+        return "Preferred"
+    elif cus_id in c:
+        return "Casual"
+    else:
+        return "Regular"
 
 def get_last_5(customer_id):
     cursor = connection.cursor() # opening a cursor to execute MySQL commands
@@ -219,11 +245,11 @@ def customer(request, cus_id=None, alert=None):
         d['c_all'] = None
         c = Customer.objects.get(customer_id=cus_id)
         d['c'] = c
-        d['cust_status'] = getStatus(cus_id)
+        d['cust_status'] = get_customer_status(int(cus_id))
         d['last5'] = get_last_5(cus_id)
         d['balance_due'] = getCustomerBalance(cus_id)
-        # count = Payment.objects.count()
         d['pay_history'] = Payment.objects.filter(customer=c.customer_id).order_by('-payment_date')
+
         
     return render(request, 'sakila_ok/customer.html', d)
 
