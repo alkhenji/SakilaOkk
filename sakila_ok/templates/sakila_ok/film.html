@@ -42,7 +42,7 @@
           <h3>Title: {{f.title|title}} ({{f.release_year}})</h3>
           <h3>Rating: {{f.rating}}</h3>
           <h3>Language: {{f_language}}</h3>
-          <h3>Movie Status: </h3>
+          <h3>Movie Status: {{ m_status|title }}</h3>
         </div>
 
       {% if recent_rentals %}

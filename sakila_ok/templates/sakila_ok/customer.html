@@ -21,7 +21,6 @@
                 {% else %}
                   <tr class="danger">
                 {% endif %}
-
                   <td><a href="/customer/{{c.customer_id}}" class="btn btn-default btn-xs btn-block"> Customer {{c.customer_id}}</a></td>
                   <td>{{c.store_id}}</td>
                   <td class="col-lg-8">{{c.first_name|title}} {{c.last_name|title}}</td>
@@ -36,8 +35,10 @@
     {% if alert %}
       <div class="alert alert-dismissable alert-warning">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <h4>{{ alert.0 }}</h4>
-        <p> {{ alert }} </p>
+        <h4>Beta version doesn't support payment..</h4>
+        <p>The application is currently in development, these features will be available once the application is ready :) <br/>
+        Visit out Github to learn more about our future updates.
+        </p>
       </div>
     {% endif %}
   
@@ -71,6 +72,11 @@
 
     <div class="row">
       <div class="container">
+
+
+      {% for each in pay_history%}
+        {{ each.amount }}
+      {% endfor %}
 
         <!-- <div class="col-md-12"> -->
           <!-- <a href="/customer/{{c.customer_id}}/cap/" class="btn btn-lg btn-info btn-block"><i class="fa fa-shopping-cart"></i> With payment</a> -->
@@ -122,14 +128,14 @@
           </div>
         </div>
 
-        <div class="panel panel-primary">
+<!--         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-user"></i> Customer Information</h3>
           </div>
           <div class="panel-body">
             Panel content
           </div>
-        </div>
+        </div> -->
 
       </div>
 
