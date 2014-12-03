@@ -265,3 +265,7 @@ class Store(models.Model):
         managed = False
         db_table = 'store'
 
+# Customer, Film, Payment, Rental, Inventory
+
+
+

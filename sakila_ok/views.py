@@ -1,7 +1,9 @@
+#coding: utf8
+
 from django.shortcuts import render
 
 # Urls and HttpResponses
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, render_to_response
 
@@ -45,6 +47,12 @@ def getVariables(request,dictionary={}):
     else:
         return {}
 
+def error404(request):
+    return render(request, 'sakila_ok/404.html', {})
+
+def error500(request):
+    return render(request, 'sakila_ok/500.html', {})
+
 def getStatus(customer_id):
     # try:
         # Customer.objects.get(id=customer_id) # check if the customer exists
@@ -66,6 +74,16 @@ def getCustomerBalance(cus_id):
     cursor.close()
     return result2
 
+def pay(request, cus_id):
+    print cus_id
+    cursor = connection.cursor()
+    cursor.callproc('sakila.payBalance',[cus_id])
+    tmp = cursor.fetchall() # fetching results
+    cursor.close() # closing the cursor connection
+    print "xxxx",tmp
+    return customer(request, cus_id, alert="Something happened")
+
+
 def get_last_5(customer_id):
     cursor = connection.cursor() # opening a cursor to execute MySQL commands
     cursor.callproc('sakila.last5', [customer_id]) # calling the procedure
@@ -79,6 +97,16 @@ def get_last_5(customer_id):
 def get_inventory(film_id):
     cursor = connection.cursor() # opening a cursor to execute MySQL commands
     cursor.callproc('sakila.Instore', [film_id]) # calling the procedure
+    tmp = cursor.fetchall() # fetching results
+    cursor.close() # closing the cursor connection
+    if len(tmp) > 1:
+        return tmp
+    else:
+        return None
+
+def get_inventory2(film_id):
+    cursor = connection.cursor() # opening a cursor to execute MySQL commands
+    cursor.callproc('sakila.Alltogether', [film_id]) # calling the procedure
     tmp = cursor.fetchall() # fetching results
     cursor.close() # closing the cursor connection
     if len(tmp) > 1:
@@ -149,17 +177,24 @@ def category(request, cat_id=None):
             d['x'] = "Not Found"
     return render(request, 'sakila_ok/index.html', d)
 
-def customer(request, cus_id=None):
+def customer(request, cus_id=None, alert=None):
     d = getVariables(request,dictionary={'page_name': "Customer"})
     if not cus_id:
         d['c_all'] = Customer.objects.all()
     else:
         # individual customer page 
+        if alert:
+            d['alert'] = alert
         d['c_all'] = None
-        d['c'] = Customer.objects.get(customer_id=cus_id)
+        c = Customer.objects.get(customer_id=cus_id)
+        d['c'] = c
         d['cust_status'] = getStatus(cus_id)
         d['last5'] = get_last_5(cus_id)
         d['balance_due'] = getCustomerBalance(cus_id)
+        # count = Payment.objects.count()
+        d['pay_history'] = Payment.objects.filter(customer=c.customer_id).order_by('-payment_date')
+        for x in d['pay_history']:
+            print x.payment_date
         
     return render(request, 'sakila_ok/customer.html', d)
 
@@ -172,10 +207,11 @@ def film(request, film_id=None):
         d['f_language'] = f.language.name
         d['f'] = f
         d['inventory'] = get_inventory(film_id)
+        # print d['inventory']
         d['rented_out'] = get_rentedout(film_id)
         d['actors'] = get_actors(film_id)
         d['recent_rentals'] = get_last_5_rentals(film_id)
-        print d['recent_rentals']
+        # print d['recent_rentals']
 
     return render(request, 'sakila_ok/film.html', d)
 
@@ -207,6 +243,11 @@ def film_search(request):
     else:
         d['error'] = True
     return render(request, 'sakila_ok/film_search.html', d)
+
+def cap(request, cus_id=None, film_id=None):
+    d = getVariables(request, dictionary={'page_name': "Checkout & Pay"})
+
+    return render(request, 'sakila_ok/checkout-and-pay.html', d)
 
 
 # # -------------------- Parameters Function -------------------------

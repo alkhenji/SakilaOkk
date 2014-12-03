@@ -97,11 +97,11 @@
                 Inventory Information
               </li>
               {% if inventory %}
-                {% for s_id,c1,c2,c3 in inventory %}
+                {% for s_id,count in inventory %}
                     <li style="font-size:14px;" class="list-group-item">
                       <i class="fa fa-building-o"></i> Store {{s_id}}
-                      <span style="background-color:#99BD57; color:white; font-size:14px;" class="badge">{{c1}} Available</span>
-                    </li>
+                      <span style="background-color:#99BD57; color:white; font-size:14px;" class="badge">{{ count }} Available!</span>
+                  </li>
                 {% endfor %}
               {% else %}
                 <li class="list-group-item">Not available anymore :(</li>
